@@ -38,5 +38,24 @@ class MainApp(App):
 
         return main_layout
 
+    def on_button_press(self, instance):
+        current=self.solution.text
+        button_text=instance.text
+
+        if button_text == 'C':
+            #clear the solution widget
+            self.solution.text = ""
+        else:
+            if current and (self.last_was_operator and button_text in self.operators):
+                #dont add two operators right after each other
+                return
+            elif current == "" and button_text in self.operators:
+                #first character cannot be an operator
+                return
+            else:
+                new_text = current + button_text
+                self.last_button = button_text
+                self.last_was_operator = self.last_button in self.operators
+
 if __name__ =='__main__':
     MainApp().run()
